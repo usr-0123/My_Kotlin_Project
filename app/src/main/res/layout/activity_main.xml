@@ -22,7 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:textAlignment="center"
-        android:textFontWeight=""
         android:text="@string/welcome" />
 
 </RelativeLayout>
