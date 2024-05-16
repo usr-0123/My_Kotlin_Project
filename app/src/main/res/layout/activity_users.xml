@@ -12,7 +12,7 @@ android:layout_height="match_parent">
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textAlignment="center"
-        android:text="List of available users"/>
+        android:text="@string/list_of_available_users"/>
 
 </LinearLayout>
 </ScrollView>

@@ -6,22 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/welcomeImg"
-        android:layout_width="match_parent"
-        android:scaleType="centerCrop"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@id/textView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/bet365_logo"/>
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="80dp"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:text="@string/welcome" />
+
+    <LinearLayout
+        android:id="@+id/image_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_margin="60dp">
+
+        <ImageView
+            android:id="@+id/welcomeImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/logo"
+            android:contentDescription="TODO" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/wait"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="@string/pleaseWait" />
+
+
 
 </RelativeLayout>

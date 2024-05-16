@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "563409696574",
+    "firebase_url": "https://test-d74ac-default-rtdb.firebaseio.com",
+    "project_id": "test-d74ac",
+    "storage_bucket": "test-d74ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563409696574:android:2ff8b4b3e35a2ba87f1e6f",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgJGJiWcU2orIP0NARSzt5SeMqm6LIbf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563409696574:android:1f9d26dffb74c6db7f1e6f",
+        "android_client_info": {
+          "package_name": "com.luwi.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgJGJiWcU2orIP0NARSzt5SeMqm6LIbf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
