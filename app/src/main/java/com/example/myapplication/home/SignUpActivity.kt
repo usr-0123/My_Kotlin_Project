@@ -8,9 +8,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -78,6 +80,7 @@ class SignUpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // User registration successful, email verification link sent
                     val user = auth.currentUser
+                    saveUserEmailToFirestore(email)
                     sendEmailVerification(user)
                     updateUI(user)
                     submitButton.isEnabled = true
@@ -114,13 +117,28 @@ class SignUpActivity : AppCompatActivity() {
                 "Please check your email for verification.",
                 Toast.LENGTH_SHORT
             ).show()
-
+            auth.signOut()
             // Example: Navigate to the LoginActivity
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
         } else {
             return
         }
+    }
+
+    private fun saveUserEmailToFirestore(email: String) {
+        // Access Firestore instance
+        val firestore = FirebaseFirestore.getInstance()
+
+        // Create a new document with the user's email as the document ID
+        firestore.collection("users").document(email)
+            .set(mapOf("email" to email))
+            .addOnSuccessListener {
+                Log.d("SignUpActivity", "User email saved to Firestore: $email")
+            }
+            .addOnFailureListener { e ->
+                Log.e("SignUpActivity", "Error saving user email to Firestore", e)
+            }
     }
 }

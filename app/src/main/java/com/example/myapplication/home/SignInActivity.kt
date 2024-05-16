@@ -1,7 +1,6 @@
 package com.example.myapplication.home
 
 import android.content.Intent
-import android.nfc.Tag
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -109,8 +108,9 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
     }
+
     private fun updateUI(user: FirebaseUser?) {
-        if (user != null) {
+        if (user != null && user.isEmailVerified) {
             Toast.makeText(
                 applicationContext,
                 "Welcome",

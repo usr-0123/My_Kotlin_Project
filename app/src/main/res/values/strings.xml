@@ -17,4 +17,5 @@
     <string name="password_do_not_match">Password do not match</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="logout">Logout</string>
+    <string name="open_gmail">Open gmail</string>
 </resources>
