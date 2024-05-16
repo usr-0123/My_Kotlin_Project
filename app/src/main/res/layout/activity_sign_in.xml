@@ -24,12 +24,12 @@
             android:text="@string/welcome_back_please_enter_details"/>
 
         <EditText
-            android:id="@+id/editTextUsername"
+            android:id="@+id/editTextEmail"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/username"
+            android:hint="@string/email"
             android:layout_marginTop="100dp"
-            android:inputType="text"/>
+            android:inputType="textEmailAddress"/>
 
         <EditText
             android:id="@+id/editTextPassword"

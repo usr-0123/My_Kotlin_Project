@@ -7,15 +7,25 @@
     tools:context=".home.HomeActivity">
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="30sp"
             android:text="@string/home_page"/>
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        android:layout_marginTop="50dp"
+        android:text="@string/logout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

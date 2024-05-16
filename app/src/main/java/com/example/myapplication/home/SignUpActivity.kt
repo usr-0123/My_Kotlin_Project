@@ -47,10 +47,10 @@ class SignUpActivity : AppCompatActivity() {
             val password = editPasswordText.text.toString().trim()
             val confirmPassword = editConfirmPassword.text.toString().trim()
 
-            if (email.isEmpty()) {
+            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(
                     applicationContext,
-                    "Please enter your email.",
+                    "Please enter your Details.",
                     Toast.LENGTH_SHORT
                 ).show()
                 return@setOnClickListener
