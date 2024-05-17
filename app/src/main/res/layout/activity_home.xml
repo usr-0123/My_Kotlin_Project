@@ -10,22 +10,28 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="330dp"
+            android:layout_height="70dp"
             android:textSize="30sp"
             android:text="@string/home_page"/>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/logout"
+        <ImageView
+            android:id="@+id/profileImg"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/logo"/>
+
+    </LinearLayout>
+    
+    <Button
+        android:id="@+id/homeBtn"
+        app:layout_constraintTop_toBottomOf="@id/linear"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@+id/linear"
-        android:layout_marginTop="50dp"
-        android:text="@string/logout"/>
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

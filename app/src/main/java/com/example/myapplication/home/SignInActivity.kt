@@ -63,7 +63,7 @@ class SignInActivity : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, MasterActivity::class.java)
             startActivity(intent)
             finish() // Finish the current activity to prevent the user from going back to the sign-in screen
         }
@@ -118,7 +118,7 @@ class SignInActivity : AppCompatActivity() {
             ).show()
 
             // Example: Navigate to the LoginActivity
-            val intent = Intent(this, HomeActivity::class.java)
+            val intent = Intent(this, MasterActivity::class.java)
             startActivity(intent)
             finish()
         } else {

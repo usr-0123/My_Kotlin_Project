@@ -1,5 +1,34 @@
 # Android application project
-Programming languages extends between kotlin and java
+Programming languages extends between `kotlin` and `java`
+
+# Folder structure
+app/
+├── src/
+│   ├── main/
+│   │   ├── java/ (or kotlin/)
+│   │   │   └── com/
+│   │   │       └── example/
+│   │   │           └── myapp/
+│   │   │               ├── HomeActivity.kt
+│   │   │               ├── HomeFragment.kt
+│   │   │               ├── SettingsFragment.kt
+│   │   │               └── ProfileFragment.kt
+│   │   └── res/
+│   │       ├── layout/
+│   │       │   ├── activity_home.xml
+│   │       │   ├── fragment_home.xml
+│   │       │   ├── fragment_settings.xml
+│   │       │   └── fragment_profile.xml
+│   │       ├── menu/
+│   │       │   └── menu_navigation.xml
+│   │       └── navigation/
+│   │           └── nav_graph.xml
+
+# Firebase
+Firebase features implemented
+- Firebase `Authentication`
+- Firebase `Firestore Database`
+- Firebase `Storage`
 
 # The Nyumba Kumi app
 Login - as user and as admin
@@ -26,16 +55,16 @@ Home page
 # Overview
 There are various manual methods of identity and management of households in a community. Currently this initiative is being run by manual methods and fragmented systems which are facing various challenges as explained in each one of them below.
 These methods include:
-## Problem 1. PAPER-BASED RECORDS:
+## `Problem 1. PAPER-BASED RECORDS:`
 Many communities still maintain paper-based records to document household information. However, paper-based systems are prone to errors, loss, and lack of accessibility. Updating and retrieving information from these records can be time-consuming and inefficient.
 
-## Problem 2. SPREADSHEETS AND LOCAL DATABASES:
+## `Problem 2. SPREADSHEETS AND LOCAL DATABASES:`
 Some communities utilize spreadsheets or local databases to store household data. These electronic systems offer more convenience and accessibility compared to paper records. However, they often lack centralized access and are susceptible to data corruption, accidental deletion, or limited backup measures. Coordinating and sharing information across different households and community members can be challenging.
 
-## Problem 3. INFORMAL COMMUNICATION CHANNELS:
+## `Problem 3. INFORMAL COMMUNICATION CHANNELS:`
 Community members primarily rely on informal communication channels such as word-of-mouth, phone calls, or physical meetings to exchange information. This decentralized approach can result in delays, miscommunication, or incomplete dissemination of important messages.
 
-## Problem 4. LACK OF STANDARDIZATION:
+## `Problem 4. LACK OF STANDARDIZATION:`
 Due to the absence of a centralized system, there is a lack of standardization in household identification across different communities. Each community may have its own set of criteria and methods for identifying households, leading to inconsistencies in data collection and management practices.
 
 To address the challenges faced in the current scenario, the following steps can be taken:
