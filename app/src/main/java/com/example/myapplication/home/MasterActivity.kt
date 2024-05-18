@@ -1,13 +1,13 @@
 package com.example.myapplication.home
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import android.widget.ImageView
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMasterBinding
+import com.example.myapplication.home.forms.NewReportForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -52,14 +53,32 @@ class MasterActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMaster.toolbar)
 
         // Set up the floating action button
-        binding.appBarMaster.fab.setOnClickListener {
-            val intent = Intent(this, AllUsersActivity::class.java)
-            startActivity(intent)
+        binding.appBarMaster.fab.setOnClickListener { view ->
+            // Creating a PopupMenu
+            val popupMenu = PopupMenu(this, view)
 
-        //        view ->
-        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-        //    .setAction("Action", null).show()
+            // Inflating menu from new_item layout
+            popupMenu.inflate(R.menu.new_item)
 
+            // Adding click listener to menu items
+            popupMenu.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.newReport -> {
+                        // Handle New Report option click
+                        openNewReportForm()
+                        true
+                    }
+                    R.id.allUsers -> {
+                        // Handle All Users option click
+                        showAllUsers()
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+            // Showing the PopupMenu
+            popupMenu.show()
         }
 
         // Set up navigation drawer and navigation controller
@@ -84,11 +103,6 @@ class MasterActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_master)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
@@ -105,17 +119,29 @@ class MasterActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_master)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
     private fun openSettings() {
         // Implement the functionality to open settings screen
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 
+    private fun openNewReportForm() {
+        startActivity(Intent(this, NewReportForm::class.java))
+    }
+
+    private fun showAllUsers() {
+        startActivity(Intent(this, AllUsersActivity::class.java))
+    }
+
     private fun logoutUser() {
         // Implement the functionality to logout the user
         auth.signOut()
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
@@ -132,11 +158,9 @@ class MasterActivity : AppCompatActivity() {
 
                 if (!userEmail.isNullOrEmpty()) {
                     val userMail = findViewById<TextView>(R.id.textView)
-
-                    userMail.text = "$userEmail"
+                    userMail.text = userEmail
                 } else {
                     userEmailAddress = findViewById(R.id.textView)
-
                     userEmailAddress.text = "lewiskipngetichkemboi"
                 }
 
@@ -171,6 +195,7 @@ class MasterActivity : AppCompatActivity() {
         // Remove ValueEventListener when activity is destroyed
         userReference.removeEventListener(userListener)
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this@MasterActivity, message, Toast.LENGTH_SHORT).show()
     }

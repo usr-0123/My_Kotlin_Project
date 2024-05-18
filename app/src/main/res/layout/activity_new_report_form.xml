@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- activity_new_post.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_margin="10dp"
+        android:text="create new post/report"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginTop="100dp">
+
+        <Button
+            android:id="@+id/buttonAttachFile"
+            android:layout_width="180dp"
+            android:layout_marginEnd="20dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/editTextPostMessage"
+            android:text="Attach File"/>
+
+        <Button
+            android:id="@+id/buttonCreatePost"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonAttachFile"
+            android:text="Create Post"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/editTextPostMessage"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Post Message"/>
+
+</RelativeLayout>
