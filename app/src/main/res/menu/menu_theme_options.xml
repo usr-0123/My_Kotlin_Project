@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_dark_mode"
+        android:title="Dark Mode"/>
+    <item
+        android:id="@+id/menu_light_mode"
+        android:title="Light Mode"/>
+    <item
+        android:id="@+id/menu_system_default"
+        android:title="System Default"/>
+</menu>

@@ -52,9 +52,14 @@ class MasterActivity : AppCompatActivity() {
         setSupportActionBar(binding.appBarMaster.toolbar)
 
         // Set up the floating action button
-        binding.appBarMaster.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+        binding.appBarMaster.fab.setOnClickListener {
+            val intent = Intent(this, AllUsersActivity::class.java)
+            startActivity(intent)
+
+        //        view ->
+        //        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //    .setAction("Action", null).show()
+
         }
 
         // Set up navigation drawer and navigation controller
@@ -102,7 +107,7 @@ class MasterActivity : AppCompatActivity() {
 
     private fun openSettings() {
         // Implement the functionality to open settings screen
-        val intent = Intent(this, ProfileActivity::class.java)
+        val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
     }
 
