@@ -13,6 +13,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class NewReportForm extends Activity {
@@ -23,7 +25,7 @@ public class NewReportForm extends Activity {
 
     private DatabaseReference databaseReference;
 
-    private Uri attachmentUri;
+    private List<Uri> attachmentUris = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +36,38 @@ public class NewReportForm extends Activity {
 
         editTextPostMessage = findViewById(R.id.editTextPostMessage);
         Button buttonAttachFile = findViewById(R.id.buttonAttachFile);
-
         Button buttonCreatePost = findViewById(R.id.buttonCreatePost);
 
         buttonAttachFile.setOnClickListener(v -> attachFile());
-
         buttonCreatePost.setOnClickListener(v -> createPost());
     }
 
     private void attachFile() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         startActivityForResult(intent, REQUEST_CODE_ATTACH_FILE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_ATTACH_FILE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            attachmentUri = data.getData();
-            Toast.makeText(this, "Attachment selected", Toast.LENGTH_SHORT).show();
-            previewFile(attachmentUri);
+        if (requestCode == REQUEST_CODE_ATTACH_FILE && resultCode == RESULT_OK) {
+            if (data.getClipData() != null) {
+                // Handle multiple files
+                int count = data.getClipData().getItemCount();
+                for (int i = 0; i < count; i++) {
+                    Uri fileUri = data.getClipData().getItemAt(i).getUri();
+                    attachmentUris.add(fileUri);
+                }
+                Toast.makeText(this, "Multiple attachments selected", Toast.LENGTH_SHORT).show();
+            } else if (data.getData() != null) {
+                // Handle single file
+                Uri attachmentUri = data.getData();
+                attachmentUris.add(attachmentUri);
+                Toast.makeText(this, "Single attachment selected", Toast.LENGTH_SHORT).show();
+                previewFile(attachmentUri);
+            }
         }
     }
 
@@ -78,39 +91,42 @@ public class NewReportForm extends Activity {
         newPostRef.child("userEmail").setValue("user@example.com");
         newPostRef.child("datetime").setValue(System.currentTimeMillis());
 
-        if (attachmentUri != null) {
-            uploadAttachment(attachmentUri, newPostRef);
-            showToast("Attachment uri available boss");
+        if (!attachmentUris.isEmpty()) {
+            uploadAttachments(attachmentUris, newPostRef);
         } else {
             savePost(newPostRef);
-            showToast("Saved without attachment");
         }
     }
 
-    private void uploadAttachment(Uri attachmentUri, final DatabaseReference newPostRef) {
+    private void uploadAttachments(List<Uri> attachmentUris, final DatabaseReference newPostRef) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
-        // Get file extension
-        String fileExtension = getFileExtension(attachmentUri);
-        String folderName = getFolderName(fileExtension);
+        for (Uri attachmentUri : attachmentUris) {
+            // Get file extension and folder name
+            String fileExtension = getFileExtension(attachmentUri);
+            String folderName = getFolderName(fileExtension);
 
-        StorageReference fileRef = storageRef.child(folderName).child(Objects.requireNonNull(attachmentUri.getLastPathSegment()));
+            // Create a reference for each file
+            StorageReference fileRef = storageRef.child(folderName).child(Objects.requireNonNull(attachmentUri.getLastPathSegment()));
 
-        fileRef.putFile(attachmentUri)
-                .addOnSuccessListener(taskSnapshot -> {
-                    // Get download URL
-                    fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                        // Save URL to Firestore
-                        newPostRef.child("attachmentURL").setValue(uri.toString());
-                        savePost(newPostRef);
-                        // Show success message
-                        showToast("Attachment uploaded successfully");
+            fileRef.putFile(attachmentUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        // Get download URL
+                        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            // Save URL to Firebase
+                            newPostRef.child("attachmentURLs").push().setValue(uri.toString());
+                            // Check if all files have been uploaded
+                            if (attachmentUris.indexOf(attachmentUri) == attachmentUris.size() - 1) {
+                                savePost(newPostRef);
+                                showToast("Attachments uploaded successfully");
+                            }
+                        });
+                    })
+                    .addOnFailureListener(e -> {
+                        Toast.makeText(NewReportForm.this, "Failed to upload attachment", Toast.LENGTH_SHORT).show();
                     });
-                })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(NewReportForm.this, "Failed to upload attachment", Toast.LENGTH_SHORT).show();
-                });
+        }
     }
 
     private void showToast(String message) {
