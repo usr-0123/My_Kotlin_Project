@@ -30,7 +30,7 @@ public class NewReportForm extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report_form);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("posts");
+        databaseReference = FirebaseDatabase.getInstance().getReference("reports");
 
         editTextPostMessage = findViewById(R.id.editTextPostMessage);
         Button buttonAttachFile = findViewById(R.id.buttonAttachFile);
@@ -80,8 +80,10 @@ public class NewReportForm extends Activity {
 
         if (attachmentUri != null) {
             uploadAttachment(attachmentUri, newPostRef);
+            showToast("Attachment uri available boss");
         } else {
             savePost(newPostRef);
+            showToast("Saved without attachment");
         }
     }
 
