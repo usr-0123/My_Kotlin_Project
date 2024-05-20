@@ -3,12 +3,17 @@ package com.example.myapplication.home;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.home.models.Post;
-import com.google.firebase.database.*;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.example.myapplication.R;
 
 import java.text.SimpleDateFormat;
@@ -19,6 +24,7 @@ import java.util.Locale;
 
 public class HomeActivity extends AppCompatActivity {
     private List<String> postList;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,46 +32,48 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         ListView listView = findViewById(R.id.listView);
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("reports");
         postList = new ArrayList<>();
-
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
         listView.setAdapter(adapter);
 
-        // Fetch data from Firebase database
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("reports");
+
+        fetchPosts(databaseReference);
+    }
+
+    private void fetchPosts(DatabaseReference databaseReference) {
+        ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Clear existing posts
                 postList.clear();
 
-                // Iterate through dataSnapshot and add posts to postList
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Post post = postSnapshot.getValue(Post.class);
                     if (post != null) {
-                        // Format the post data as a string
                         String formattedPost = formatPost(post);
                         postList.add(formattedPost);
                     }
                 }
 
-                // Notify the adapter that the data set has changed
-                adapter.notifyDataSetChanged();
+                if (postList.isEmpty()) {
+                    postList.add("No data available");
+                }
+
+                runOnUiThread(() -> adapter.notifyDataSetChanged());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
+                Toast.makeText(HomeActivity.this, "Failed to load posts.", Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+        databaseReference.addValueEventListener(postListener);
     }
 
     private String formatPost(Post post) {
-        // Convert datetime to readable format
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String date = sdf.format(new Date(post.getDatetime()));
 
-        // Concatenate message, userEmail, datetime, and attachment URLs
         StringBuilder formattedPost = new StringBuilder();
         formattedPost.append("Message: ").append(post.getMessage()).append("\n")
                 .append("User: ").append(post.getUserEmail()).append("\n")
