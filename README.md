@@ -2,7 +2,7 @@
 Programming languages extends between `kotlin` and `java`
 
 # Folder structure
-![alt text](./Android%20app%20folder%20structure..png)
+![alt text](./index.png)
 
 # Firebase
 Firebase features implemented
