@@ -161,10 +161,10 @@ class MasterActivity : AppCompatActivity() {
                     userMail.text = userEmail
                 } else {
                     userEmailAddress = findViewById(R.id.textView)
-                    userEmailAddress.text = "lewiskipngetichkemboi"
+                    userEmailAddress.text = "Lewis Kipngetich Kemboi"
                 }
 
-                showToast("User profile image URL: $userProfileImageUrl")
+                showToast("User profile image URL: $userEmail")
 
                 // Use Glide to load the user profile image into ImageView
                 if (!userProfileImageUrl.isNullOrEmpty()) {

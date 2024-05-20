@@ -2,27 +2,7 @@
 Programming languages extends between `kotlin` and `java`
 
 # Folder structure
-app/
-├── src/
-│   ├── main/
-│   │   ├── java/ (or kotlin/)
-│   │   │   └── com/
-│   │   │       └── example/
-│   │   │           └── myapp/
-│   │   │               ├── HomeActivity.kt
-│   │   │               ├── HomeFragment.kt
-│   │   │               ├── SettingsFragment.kt
-│   │   │               └── ProfileFragment.kt
-│   │   └── res/
-│   │       ├── layout/
-│   │       │   ├── activity_home.xml
-│   │       │   ├── fragment_home.xml
-│   │       │   ├── fragment_settings.xml
-│   │       │   └── fragment_profile.xml
-│   │       ├── menu/
-│   │       │   └── menu_navigation.xml
-│   │       └── navigation/
-│   │           └── nav_graph.xml
+![alt text](./Android%20app%20folder%20structure..png)
 
 # Firebase
 Firebase features implemented
