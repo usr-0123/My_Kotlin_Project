@@ -20,9 +20,10 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMasterBinding
+import com.example.myapplication.home.ui.gallery.forms.NewGroupActivity
 import com.example.myapplication.home.ui.users.AllUsersActivity
 import com.example.myapplication.home.ui.settings.SettingsActivity
-import com.example.myapplication.home.ui.forms.NewReportForm
+import com.example.myapplication.home.ui.reports.forms.NewReportForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -68,6 +69,10 @@ class MasterActivity : AppCompatActivity() {
                     R.id.newReport -> {
                         // Handle New Report option click
                         openNewReportForm()
+                        true
+                    }
+                    R.id.newGroup -> {
+                        openNewGroupForm()
                         true
                     }
                     R.id.allUsers -> {
@@ -134,6 +139,10 @@ class MasterActivity : AppCompatActivity() {
 
     private fun openNewReportForm() {
         startActivity(Intent(this, NewReportForm::class.java))
+    }
+
+    private fun openNewGroupForm() {
+        startActivity(Intent(this, NewGroupActivity::class.java))
     }
 
     private fun showAllUsers() {

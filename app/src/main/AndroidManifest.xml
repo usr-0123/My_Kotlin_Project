@@ -24,22 +24,9 @@
             android:name=".home.ui.users.chats.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".chats.ChatRoomActivity"
+            android:name=".home.ui.reports.forms.NewReportForm"
             android:exported="false" />
-        <activity
-            android:name=".chats.ChatAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".chats.ChatRepository"
-            android:exported="false" />
-        <activity
-            android:name=".chats.ChatListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".home.reportsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".home.ui.forms.NewReportForm"
+        <activity android:name=".home.ui.gallery.forms.NewGroupActivity"
             android:exported="false" />
         <activity
             android:name=".home.HomeActivity"

@@ -4,6 +4,9 @@
         android:id="@+id/newReport"
         android:title="New Report"/>
     <item
+        android:id="@+id/newGroup"
+        android:title="New Group"/>
+    <item
         android:id="@+id/allUsers"
         android:title="All Users"/>
 </menu>

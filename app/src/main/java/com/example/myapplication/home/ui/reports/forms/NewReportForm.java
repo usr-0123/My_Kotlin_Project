@@ -1,4 +1,4 @@
-package com.example.myapplication.home.ui.forms;
+package com.example.myapplication.home.ui.reports.forms;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,6 +23,8 @@ public class NewReportForm extends Activity {
 
     private EditText editTextPostMessage;
 
+    private EditText editTextPostTitle;
+
     private DatabaseReference databaseReference;
 
     private List<Uri> attachmentUris = new ArrayList<>();
@@ -35,6 +37,7 @@ public class NewReportForm extends Activity {
         databaseReference = FirebaseDatabase.getInstance().getReference("reports");
 
         editTextPostMessage = findViewById(R.id.editTextPostMessage);
+        editTextPostTitle = findViewById(R.id.editTextPostTitle);
         Button buttonAttachFile = findViewById(R.id.buttonAttachFile);
         Button buttonCreatePost = findViewById(R.id.buttonCreatePost);
 
@@ -80,6 +83,7 @@ public class NewReportForm extends Activity {
 
     private void createPost() {
         String postMessage = editTextPostMessage.getText().toString().trim();
+        String reportTitle = editTextPostTitle.getText().toString().trim();
 
         if (postMessage.isEmpty()) {
             Toast.makeText(this, "Please enter a post message", Toast.LENGTH_SHORT).show();
@@ -89,7 +93,7 @@ public class NewReportForm extends Activity {
         DatabaseReference newPostRef = databaseReference.push();
         newPostRef.child("message").setValue(postMessage);
         newPostRef.child("userEmail").setValue("user@example.com");
-        // newPostRef.child("reportTitle").setValue("Crime in the area");
+        newPostRef.child("reportTitle").setValue(reportTitle);
         newPostRef.child("datetime").setValue(System.currentTimeMillis());
 
         if (!attachmentUris.isEmpty()) {

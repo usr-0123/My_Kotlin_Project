@@ -61,6 +61,17 @@ class SlideshowFragment : Fragment() {
 
         reportContainer.addView(reportView)
 
+        val reportMessageView = TextView(requireContext()).apply {
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            setPadding(16, 16, 16, 16)
+            text = report.child("message").getValue(String::class.java)
+        }
+
+        reportContainer.addView(reportMessageView)
+
         // Add click listener to open ChatActivity
         reportContainer.setOnClickListener {
             val intent = Intent(requireContext(), ReportActivity::class.java)
