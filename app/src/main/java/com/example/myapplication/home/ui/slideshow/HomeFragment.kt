@@ -1,5 +1,5 @@
 // HomeFragment.kt
-package com.example.myapplication.home.ui.reports
+package com.example.myapplication.home.ui.slideshow
 
 import android.os.Bundle
 import android.view.LayoutInflater

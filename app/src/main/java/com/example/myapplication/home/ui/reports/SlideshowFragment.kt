@@ -1,5 +1,4 @@
-// GalleryFragment.kt
-package com.example.myapplication.home.ui.gallery
+package com.example.myapplication.home.ui.reports
 
 import android.content.Intent
 import android.os.Bundle
@@ -11,13 +10,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.R
-import com.example.myapplication.databinding.FragmentGalleryBinding
-import com.example.myapplication.home.ui.gallery.activity.GroupActivity
+import com.example.myapplication.databinding.FragmentSlideshowBinding
+import com.example.myapplication.home.ui.reports.activity.ReportActivity
 import com.google.firebase.database.DataSnapshot
 
-class GalleryFragment : Fragment() {
+class SlideshowFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentSlideshowBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -25,25 +24,24 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val galleryViewModel = ViewModelProvider(this).get(GalleryViewModel::class.java)
+        val slideshowViewModel = ViewModelProvider(this).get(SlideshowViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val groupsContainer: LinearLayout = binding.reportsContainer
+        val reportsContainer: LinearLayout = binding.reportsContainer
 
-        galleryViewModel.groups.observe(viewLifecycleOwner) { groups ->
-            groupsContainer.removeAllViews()
-            for (group in groups) {
-                addReportToView(group, groupsContainer)
+        slideshowViewModel.reports.observe(viewLifecycleOwner) { reports ->
+            reportsContainer.removeAllViews()
+            for (report in reports) {
+                addReportToView(report, reportsContainer)
             }
         }
-
         return root
     }
 
-    private fun addReportToView(group: DataSnapshot, container: LinearLayout) {
-        val groupContainer = LinearLayout(requireContext()).apply {
+    private fun addReportToView(report: DataSnapshot, container: LinearLayout) {
+        val reportContainer = LinearLayout(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -52,26 +50,26 @@ class GalleryFragment : Fragment() {
             setPadding(16, 16, 16, 16)
         }
 
-        val groupView = TextView(requireContext()).apply {
+        val reportView = TextView(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
             setPadding(16, 16, 16, 16)
-            text = group.child("groupName").getValue(String::class.java)
+            text = report.child("reportTitle").getValue(String::class.java)
         }
 
-        groupContainer.addView(groupView)
+        reportContainer.addView(reportView)
 
         // Add click listener to open ChatActivity
-        groupContainer.setOnClickListener {
-            val intent = Intent(requireContext(), GroupActivity::class.java)
-            intent.putExtra("groupId", group.key)
-            intent.putExtra("groupTitle",group.child("groupName").getValue(String::class.java))
+        reportContainer.setOnClickListener {
+            val intent = Intent(requireContext(), ReportActivity::class.java)
+            intent.putExtra("reportId", report.key)
+            intent.putExtra("reportName", report.child("reportTitle").getValue(String::class.java))
             startActivity(intent)
         }
 
-        container.addView(groupContainer)
+        container.addView(reportContainer)
 
         val divider = View(requireContext()).apply {
             layoutParams = LinearLayout.LayoutParams(

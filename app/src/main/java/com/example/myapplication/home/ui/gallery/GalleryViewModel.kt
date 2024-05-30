@@ -5,33 +5,33 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.database.*
 
 class GalleryViewModel : ViewModel() {
 
-    private val _reports = MutableLiveData<List<QueryDocumentSnapshot>>()
-    val reports: LiveData<List<QueryDocumentSnapshot>> = _reports
+    private val _groups = MutableLiveData<List<DataSnapshot>>()
+    val groups: LiveData<List<DataSnapshot>> = _groups
 
-    private val db = FirebaseFirestore.getInstance()
+    private val database: DatabaseReference = FirebaseDatabase.getInstance().getReference("groups")
 
     init {
-        fetchReports()
+        fetchGroups()
     }
 
-    private fun fetchReports() {
-        val reportsRef = db.collection("reports")
-        reportsRef.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val reportList = mutableListOf<QueryDocumentSnapshot>()
-                for (document in task.result!!) {
-                    Log.d("GalleryViewModel", "Report ID: ${document.id}")
-                    reportList.add(document)
+    private fun fetchGroups() {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val  groupList = mutableListOf<DataSnapshot>()
+                for (groupSnapshot in snapshot.children) {
+                    Log.d("GalleryViewModel","Group ID: ${groupSnapshot.key}")
+                    groupList.add(groupSnapshot)
                 }
-                _reports.value = reportList
-            } else {
-                Log.w("GalleryViewModel", "Error getting documents.", task.exception)
+                _groups.value = groupList
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("GalleryViewModel","Error fetching groups",error.toException())
+            }
+        })
     }
 }
