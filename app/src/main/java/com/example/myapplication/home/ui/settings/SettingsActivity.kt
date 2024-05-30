@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.home.ui.settings
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.myapplication.R
+import com.example.myapplication.home.ui.profile.ProfileActivity
 
 class SettingsActivity : AppCompatActivity() {
 

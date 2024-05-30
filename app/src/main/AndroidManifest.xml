@@ -15,33 +15,54 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
-            android:name=".home.forms.NewReportForm"
+            android:name=".home.ui.reports.reports.ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.ui.users.chats.ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chats.ChatRoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".chats.ChatAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".chats.ChatRepository"
+            android:exported="false" />
+        <activity
+            android:name=".chats.ChatListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.reportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".home.ui.forms.NewReportForm"
             android:exported="false" />
         <activity
             android:name=".home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".home.AllUsersActivity"
+            android:name=".home.ui.users.AllUsersActivity"
             android:exported="false" />
         <activity
-            android:name=".home.SettingsActivity"
+            android:name=".home.ui.settings.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".home.MasterActivity"
+            android:name=".home.ui.MasterActivity"
             android:exported="false"
             android:label="@string/title_activity_master"
             android:theme="@style/Theme.MyApplication.NoActionBar" />
         <activity
-            android:name=".home.ProfileActivity"
+            android:name=".home.ui.profile.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".home.SignUpActivity"
+            android:name=".home.authentication.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".home.SignInActivity"
+            android:name=".home.authentication.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".home.UsersActivity"
+            android:name=".home.ui.users.UsersActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

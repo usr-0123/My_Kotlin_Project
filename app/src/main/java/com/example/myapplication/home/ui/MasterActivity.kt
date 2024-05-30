@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.home.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -20,7 +20,9 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMasterBinding
-import com.example.myapplication.home.forms.NewReportForm
+import com.example.myapplication.home.ui.users.AllUsersActivity
+import com.example.myapplication.home.ui.settings.SettingsActivity
+import com.example.myapplication.home.ui.forms.NewReportForm
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -89,7 +91,7 @@ class MasterActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
+            R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_home_activity), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 

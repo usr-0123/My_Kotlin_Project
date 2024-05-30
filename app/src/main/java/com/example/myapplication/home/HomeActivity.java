@@ -1,91 +1,124 @@
+// HomeActivity.java
 package com.example.myapplication.home;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.home.models.Post;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.example.myapplication.R;
+import com.example.myapplication.home.ui.reports.reports.ReportActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 public class HomeActivity extends AppCompatActivity {
-    private List<String> postList;
-    private ArrayAdapter<String> adapter;
+
+    private static final String TAG = "HomeActivity";
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private LinearLayout reportsContainer;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        ListView listView = findViewById(R.id.listView);
-        postList = new ArrayList<>();
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, postList);
-        listView.setAdapter(adapter);
+        reportsContainer = findViewById(R.id.reportsContainer);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("reports");
+        // Initialize Firestore and FirebaseAuth
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        fetchPosts(databaseReference);
+        // Get the currently logged-in user's ID
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        currentUserId = currentUser != null ? currentUser.getUid() : null;
+
+        // Fetch reports from Firestore
+        fetchReports();
     }
 
-    private void fetchPosts(DatabaseReference databaseReference) {
-        ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                postList.clear();
-
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Post post = postSnapshot.getValue(Post.class);
-                    if (post != null) {
-                        String formattedPost = formatPost(post);
-                        postList.add(formattedPost);
-                    }
-                }
-
-                if (postList.isEmpty()) {
-                    postList.add("No data available");
-                }
-
-                runOnUiThread(() -> adapter.notifyDataSetChanged());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(HomeActivity.this, "Failed to load posts.", Toast.LENGTH_SHORT).show();
-            }
-        };
-        databaseReference.addValueEventListener(postListener);
-    }
-
-    private String formatPost(Post post) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        String date = sdf.format(new Date(post.getDatetime()));
-
-        StringBuilder formattedPost = new StringBuilder();
-        formattedPost.append("Message: ").append(post.getMessage()).append("\n")
-                .append("User: ").append(post.getUserEmail()).append("\n")
-                .append("Date: ").append(date).append("\n");
-
-        if (post.getAttachmentURLs() != null && !post.getAttachmentURLs().isEmpty()) {
-            formattedPost.append("Attachments:\n");
-            for (String url : post.getAttachmentURLs()) {
-                formattedPost.append(url).append("\n");
-            }
+    private void fetchReports() {
+        if (currentUserId == null) {
+            Log.e(TAG, "No logged-in user.");
+            return;
         }
 
-        return formattedPost.toString();
+        CollectionReference reportsRef = db.collection("reports");
+
+        reportsRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                if (task.getResult().isEmpty()) {
+                    // No data fetched, display a message
+                    TextView noDataTextView = new TextView(this);
+                    noDataTextView.setText("No data fetched");
+                    reportsContainer.addView(noDataTextView);
+                } else {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, "Report ID: " + document.getId());
+                        Map<String, Object> report = document.getData();
+                        Log.d(TAG, "Adding report: " + report.get("reportTitle"));
+                        addReportToView(document.getId(), report);
+                    }
+                }
+            } else {
+                Log.w(TAG, "Error getting documents.", task.getException());
+            }
+        });
+    }
+
+
+    private void addReportToView(String reportId, Map<String, Object> report) {
+        // Create a container for each report
+        LinearLayout reportContainer = new LinearLayout(this);
+        reportContainer.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        reportContainer.setOrientation(LinearLayout.VERTICAL);
+        reportContainer.setPadding(16, 16, 16, 16);
+
+        // Create a TextView for the report info
+        TextView reportView = new TextView(this);
+        reportView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        ));
+        reportView.setPadding(16, 16, 16, 16);
+
+        String reportInfo = (String) report.get("reportTitle");
+        reportView.setText(reportInfo);
+
+        // Set an OnClickListener to open the ChatActivity for the selected report
+        reportContainer.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ReportActivity.class);
+            intent.putExtra("reportId", reportId);
+            startActivity(intent);
+        });
+
+        // Add the TextView to the report container
+        reportContainer.addView(reportView);
+
+        // Add the report container to the main reports container
+        reportsContainer.addView(reportContainer);
+
+        // Add a divider view
+        View divider = new View(this);
+        divider.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                1 // 1dp height for the divider
+        ));
+        divider.setBackgroundResource(R.drawable.divider);
+        reportsContainer.addView(divider);
     }
 }

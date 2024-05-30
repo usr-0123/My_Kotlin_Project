@@ -3,7 +3,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.home.SignInActivity
+import com.example.myapplication.home.authentication.SignInActivity
 
 class MainActivity : AppCompatActivity() {
 

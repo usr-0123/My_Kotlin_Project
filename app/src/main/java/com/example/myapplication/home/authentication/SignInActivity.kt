@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.home.authentication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.example.myapplication.R
+import com.example.myapplication.home.ui.MasterActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

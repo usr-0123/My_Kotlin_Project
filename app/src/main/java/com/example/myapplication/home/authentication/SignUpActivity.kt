@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.home.authentication
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

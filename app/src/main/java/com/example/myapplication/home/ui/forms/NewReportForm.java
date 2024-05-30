@@ -1,4 +1,4 @@
-package com.example.myapplication.home.forms;
+package com.example.myapplication.home.ui.forms;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -89,6 +89,7 @@ public class NewReportForm extends Activity {
         DatabaseReference newPostRef = databaseReference.push();
         newPostRef.child("message").setValue(postMessage);
         newPostRef.child("userEmail").setValue("user@example.com");
+        // newPostRef.child("reportTitle").setValue("Crime in the area");
         newPostRef.child("datetime").setValue(System.currentTimeMillis());
 
         if (!attachmentUris.isEmpty()) {

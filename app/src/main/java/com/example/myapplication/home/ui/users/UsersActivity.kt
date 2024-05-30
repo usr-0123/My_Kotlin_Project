@@ -1,4 +1,4 @@
-package com.example.myapplication.home
+package com.example.myapplication.home.ui.users
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
