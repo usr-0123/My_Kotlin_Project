@@ -34,4 +34,6 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="groups">Groups</string>
     <string name="users">Users</string>
+    <string name="report_image" />
+    <string name="image">image</string>
 </resources>

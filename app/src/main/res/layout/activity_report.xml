@@ -1,26 +1,70 @@
-<!-- activity_chat.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    >
 
     <TextView
         android:id="@+id/groupTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="8dp"/>
+        android:text="Group Title"
+        android:textSize="18sp"
+        android:padding="16dp"
+        android:paddingBottom="8dp" />
 
-    <TextView
-        android:id="@+id/reportMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:padding="8dp"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="16dp"
+        android:layout_weight="1">
 
-    <!-- Add more UI components for the chatroom -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/reportMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Report Message"
+                android:textSize="16sp"
+                android:paddingBottom="8dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/imagesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/commentInput"
+        android:layout_width="300dp"
+        android:background="@color/gray"
+        android:hint="Enter your response..."
+        android:padding="6dp"
+        android:inputType="textLongMessage"
+        android:layout_height="48dp"/>
+
+        <ImageView
+            android:id="@+id/sendBtn"
+            android:layout_width="50dp"
+            android:layout_marginLeft="5dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/ic_send_button"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 
 </LinearLayout>
