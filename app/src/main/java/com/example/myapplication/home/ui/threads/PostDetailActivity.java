@@ -102,7 +102,8 @@ public class PostDetailActivity extends AppCompatActivity {
                 String commentText = commentEditText.getText().toString().trim();
                 if (!commentText.isEmpty()) {
                     String commentId = commentsReference.push().getKey();
-                    Comment comment = new Comment(commentId, "userId", postId, commentText);
+                    Comment comment = new Comment(commentId, "userId", postId, commentText, System.currentTimeMillis());
+                    assert commentId != null;
                     commentsReference.child(commentId).setValue(comment);
                     commentEditText.setText("");
                 }

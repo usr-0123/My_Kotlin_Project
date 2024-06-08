@@ -12,12 +12,13 @@ import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var emailEditText: EditText
+    private lateinit var usernameEditText: EditText
     private lateinit var submitButton: Button
     private lateinit var editPasswordText: EditText
     private lateinit var editConfirmPassword: EditText
@@ -32,6 +33,7 @@ class SignUpActivity : AppCompatActivity() {
 
         // Find views
         emailEditText = findViewById(R.id.editTextEmail)
+        usernameEditText = findViewById(R.id.editTextUsername)
         submitButton = findViewById(R.id.buttonRegister)
         editPasswordText = findViewById(R.id.editTextPassword)
         editConfirmPassword = findViewById(R.id.editTextConfirmPassword)
@@ -46,10 +48,11 @@ class SignUpActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
+            val username = usernameEditText.text.toString().trim()
             val password = editPasswordText.text.toString().trim()
             val confirmPassword = editConfirmPassword.text.toString().trim()
 
-            if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            if (email.isEmpty() || username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(
                     applicationContext,
                     "Please enter your Details.",
@@ -70,17 +73,17 @@ class SignUpActivity : AppCompatActivity() {
             submitButton.isEnabled = false
 
             // Register user with email and password
-            registerUser(email, password)
+            registerUser(email, username, password)
         }
     }
 
-    private fun registerUser(email: String, password: String) {
+    private fun registerUser(email: String, username: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // User registration successful, email verification link sent
                     val user = auth.currentUser
-                    saveUserEmailToFirestore(email)
+                    saveUserToRealtimeDatabase(user, username)
                     sendEmailVerification(user)
                     updateUI(user)
                     submitButton.isEnabled = true
@@ -127,18 +130,25 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUserEmailToFirestore(email: String) {
-        // Access Firestore instance
-        val firestore = FirebaseFirestore.getInstance()
+    private fun saveUserToRealtimeDatabase(user: FirebaseUser?, username: String) {
+        if (user == null) return
 
-        // Create a new document with the user's email as the document ID
-        firestore.collection("users").document(email)
-            .set(mapOf("email" to email))
+        val database = FirebaseDatabase.getInstance()
+        val usersRef = database.getReference("users")
+
+        val userId = user.uid
+        val userMap = mapOf(
+            "userId" to userId,
+            "email" to user.email,
+            "username" to username
+        )
+
+        usersRef.child(userId).setValue(userMap)
             .addOnSuccessListener {
-                Log.d("SignUpActivity", "User email saved to Firestore: $email")
+                Log.d("SignUpActivity", "User details saved to Realtime Database")
             }
             .addOnFailureListener { e ->
-                Log.e("SignUpActivity", "Error saving user email to Firestore", e)
+                Log.e("SignUpActivity", "Error saving user details to Realtime Database", e)
             }
     }
 }

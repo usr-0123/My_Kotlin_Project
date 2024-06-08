@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/contentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="What's on your mind?"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLines="5"
+        android:gravity="top|start"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/selectImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Image"
+        android:layout_marginBottom="16dp"/>
+
+    <ImageView
+        android:id="@+id/selectedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/postButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Post"/>
+
+</LinearLayout>

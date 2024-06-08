@@ -1,76 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".home.authentication.SignUpActivity">
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:padding="16dp">
 
-    <LinearLayout
-        android:layout_width="300dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+    <EditText
+        android:id="@+id/editTextUsername"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginBottom="16dp"
+        android:hint="Username"
+        android:inputType="text"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/register_an_account_with_us"/>
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Email"
+        android:inputType="textEmailAddress"/>
 
-        <EditText
-            android:id="@+id/editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="50dp"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:autofillHints=" " />
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Password"
+        android:inputType="textPassword"/>
 
-        <EditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:autofillHints=" " />
+    <EditText
+        android:id="@+id/editTextConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"/>
 
-        <EditText
-            android:id="@+id/editTextConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:hint="@string/confirm_password"
-            android:inputType="textPassword"
-            android:autofillHints=" " />
+    <TextView
+        android:id="@+id/passwordMismatchTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Passwords do not match"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"/>
 
-        <TextView
-            android:id="@+id/passwordMismatchTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password_do_not_match"
-            android:textColor="@android:color/holo_red_dark"
-            android:visibility="gone"/>
+    <Button
+        android:id="@+id/buttonRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Register"/>
 
-        <Button
-            android:id="@+id/buttonRegister"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="50dp"
-            android:text="@string/signup"/>
+    <TextView
+        android:id="@+id/signInNavigate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Already have an account? Sign In"
+        android:textColor="@android:color/holo_blue_dark"/>
 
-        <TextView
-            android:id="@+id/signInNavigate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/login"/>
-    </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

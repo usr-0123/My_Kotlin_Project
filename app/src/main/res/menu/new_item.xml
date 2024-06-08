@@ -9,4 +9,7 @@
     <item
         android:id="@+id/allUsers"
         android:title="All Users"/>
+    <item
+        android:id="@+id/newThread"
+        android:title="New Thread"/>
 </menu>

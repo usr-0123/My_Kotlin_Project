@@ -24,6 +24,7 @@ import com.example.myapplication.home.ui.gallery.forms.NewGroupActivity
 import com.example.myapplication.home.ui.users.AllUsersActivity
 import com.example.myapplication.home.ui.settings.SettingsActivity
 import com.example.myapplication.home.ui.reports.forms.NewReportForm
+import com.example.myapplication.home.ui.threads.forms.AddPostActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -78,6 +79,11 @@ class MasterActivity : AppCompatActivity() {
                     R.id.allUsers -> {
                         // Handle All Users option click
                         showAllUsers()
+                        true
+                    }
+                    R.id.newThread -> {
+                        // Handle All Users option click
+                        openNewThreadForm()
                         true
                     }
                     else -> false
@@ -147,6 +153,10 @@ class MasterActivity : AppCompatActivity() {
 
     private fun showAllUsers() {
         startActivity(Intent(this, AllUsersActivity::class.java))
+    }
+
+    private fun openNewThreadForm() {
+        startActivity(Intent(this, AddPostActivity::class.java))
     }
 
     private fun logoutUser() {
