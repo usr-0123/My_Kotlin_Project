@@ -1,6 +1,7 @@
 // HomeActivity.java
 package com.example.myapplication.home;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.R;
+import com.example.myapplication.home.states.NetworkUtil;
 import com.example.myapplication.home.ui.reports.activity.ReportActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,6 +49,11 @@ public class HomeActivity extends AppCompatActivity {
 
         // Fetch reports from Firestore
         fetchReports();
+
+        // Network state
+        if (!NetworkUtil.isConnected(this)) {
+            showOfflineError();
+        }
     }
 
     private void fetchReports() {
@@ -120,5 +128,19 @@ public class HomeActivity extends AppCompatActivity {
         ));
         divider.setBackgroundResource(R.drawable.divider);
         reportsContainer.addView(divider);
+    }
+
+    private void showOfflineError() {
+        new AlertDialog.Builder(this)
+                .setTitle("No Internet Connection")
+                .setMessage("Please check your internet connection and try again.")
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

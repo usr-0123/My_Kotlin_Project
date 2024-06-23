@@ -8,27 +8,33 @@ import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.navigation.NavigationView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityMasterBinding
 import com.example.myapplication.home.ui.gallery.forms.NewGroupActivity
-import com.example.myapplication.home.ui.users.AllUsersActivity
-import com.example.myapplication.home.ui.settings.SettingsActivity
 import com.example.myapplication.home.ui.reports.forms.NewReportForm
+import com.example.myapplication.home.ui.settings.SettingsActivity
 import com.example.myapplication.home.ui.threads.forms.AddPostActivity
+import com.example.myapplication.home.ui.users.AllUsersActivity
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MasterActivity : AppCompatActivity() {
+    private lateinit var imageView: ImageView
+
     // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
@@ -182,10 +188,8 @@ class MasterActivity : AppCompatActivity() {
                     userMail.text = userEmail
                 } else {
                     userEmailAddress = findViewById(R.id.textView)
-                    userEmailAddress.text = "Lewis Kipngetich Kemboi"
+                    userEmailAddress.text = "Loading email..."
                 }
-
-                showToast("User profile image URL: $userEmail")
 
                 // Use Glide to load the user profile image into ImageView
                 if (!userProfileImageUrl.isNullOrEmpty()) {
@@ -197,7 +201,10 @@ class MasterActivity : AppCompatActivity() {
                 } else {
                     // Handle case where user profile image URL is empty or null
                     // You can set a default image or handle it as needed
+                    imageView.setImageResource(R.drawable.bet365_logo)
                 }
+
+//                showToast("User profile image URL: $userProfileImageUrl")
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
