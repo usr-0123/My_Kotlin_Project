@@ -37,4 +37,9 @@
     <string name="report_image" />
     <string name="image">image</string>
     <string name="threads">Threads</string>
+    <string name="profile_image_desc" />
+    <string name="edit_image_desc">Edit image</string>
+    <string name="edit_email_desc">Edit email</string>
+    <string name="loading">Loading...</string>
+    <string name="edit_username_desc">Edit username</string>
 </resources>

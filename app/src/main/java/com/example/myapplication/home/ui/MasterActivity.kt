@@ -57,6 +57,7 @@ class MasterActivity : AppCompatActivity() {
 
         // Initialize Firebase components
         database = FirebaseDatabase.getInstance()
+
         userReference = database.getReference("users").child(auth.currentUser?.uid ?: "lewiskipngetichkemboi@gmail.com")
 
         // Set up the toolbar
