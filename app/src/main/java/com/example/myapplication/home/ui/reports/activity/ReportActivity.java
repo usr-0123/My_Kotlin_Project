@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.home.ui.reports.adapters.ImagesAdapter;
+import com.example.myapplication.home.ui.reports.model.Reply;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,17 +28,24 @@ public class ReportActivity extends AppCompatActivity {
     private RecyclerView imagesRecyclerView;
     private ImagesAdapter imagesAdapter;
     private DatabaseReference databaseReference;
+    private EditText replyEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
+        ImageView sendButton = findViewById(R.id.sendBtn);
+
+        sendButton.setOnClickListener(v -> sendMessage());
+
         String reportName = getIntent().getStringExtra("reportName");
         String reportId = getIntent().getStringExtra("reportId");
         TextView reportTitle = findViewById(R.id.groupTitle);
         reportMessage = findViewById(R.id.reportMessage);
         imagesRecyclerView = findViewById(R.id.imagesRecyclerView);
+
+        replyEditText = findViewById(R.id.commentInput);
 
         reportTitle.setText(reportName);
 
@@ -44,6 +55,22 @@ public class ReportActivity extends AppCompatActivity {
         imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         imagesAdapter = new ImagesAdapter(this, new ArrayList<>());
         imagesRecyclerView.setAdapter(imagesAdapter);
+    }
+
+    private void sendMessage() {
+    // Send messages
+        String reportId = getIntent().getStringExtra("reportId");
+        Toast.makeText(this, reportId, Toast.LENGTH_SHORT).show();
+        DatabaseReference replyReference = FirebaseDatabase.getInstance("reports").getReference().child(reportId);
+        String replyText = replyEditText.getText().toString().trim();
+
+        long timestamp = System.currentTimeMillis();
+        if (!replyText.isEmpty()) {
+            Reply reply = new Reply("userId", replyText, timestamp);
+            replyReference.push().setValue(reply);
+            replyEditText.setText("");
+        }
+        Toast.makeText(this, "Replied!", Toast.LENGTH_SHORT).show();
     }
 
     private void fetchReportData() {

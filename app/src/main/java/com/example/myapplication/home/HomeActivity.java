@@ -85,7 +85,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-
     private void addReportToView(String reportId, Map<String, Object> report) {
         // Create a container for each report
         LinearLayout reportContainer = new LinearLayout(this);

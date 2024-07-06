@@ -33,9 +33,7 @@ public class AddPostActivity extends AppCompatActivity {
     private Button selectImageButton;
     private ImageView selectedImageView;
     private Button postButton;
-
     private Uri selectedImageUri;
-
     private DatabaseReference databaseReference;
     private StorageReference storageReference;
     private FirebaseAuth firebaseAuth;

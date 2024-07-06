@@ -24,13 +24,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class PostDetailActivity extends AppCompatActivity {
 
     private TextView contentTextView;
     private ImageView postImageView;
+    private TextView timestampTextView;
     private RecyclerView commentsRecyclerView;
     private EditText commentEditText;
     private Button addCommentButton;
@@ -46,6 +50,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
         contentTextView = findViewById(R.id.contentTextView);
         postImageView = findViewById(R.id.postImageView);
+        timestampTextView = findViewById(R.id.timestampTextView);
         commentsRecyclerView = findViewById(R.id.commentsRecyclerView);
         commentEditText = findViewById(R.id.commentEditText);
         addCommentButton = findViewById(R.id.addCommentButton);
@@ -69,6 +74,8 @@ public class PostDetailActivity extends AppCompatActivity {
                     if (post.imageUrl != null && !post.imageUrl.isEmpty()) {
                         Glide.with(PostDetailActivity.this).load(post.imageUrl).into(postImageView);
                     }
+                    String formattedTimestamp = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault()).format(new Date(post.timestamp));
+                    timestampTextView.setText(formattedTimestamp);
                 }
             }
 
@@ -111,4 +118,3 @@ public class PostDetailActivity extends AppCompatActivity {
         });
     }
 }
-

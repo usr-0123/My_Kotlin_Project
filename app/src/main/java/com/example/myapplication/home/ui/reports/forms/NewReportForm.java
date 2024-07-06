@@ -23,6 +23,8 @@ public class NewReportForm extends Activity {
 
     private EditText editTextPostMessage;
 
+    private EditText editTextlocationDetails;
+
     private EditText editTextPostTitle;
 
     private DatabaseReference databaseReference;
@@ -36,6 +38,7 @@ public class NewReportForm extends Activity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference("reports");
 
+        editTextlocationDetails = findViewById(R.id.editTextlocationDetails);
         editTextPostMessage = findViewById(R.id.editTextPostMessage);
         editTextPostTitle = findViewById(R.id.editTextPostTitle);
         Button buttonAttachFile = findViewById(R.id.buttonAttachFile);
@@ -83,6 +86,7 @@ public class NewReportForm extends Activity {
 
     private void createPost() {
         String postMessage = editTextPostMessage.getText().toString().trim();
+        String locationDetails = editTextlocationDetails.getText().toString().trim();
         String reportTitle = editTextPostTitle.getText().toString().trim();
 
         if (postMessage.isEmpty()) {
@@ -90,7 +94,13 @@ public class NewReportForm extends Activity {
             return;
         }
 
+        if (locationDetails.isEmpty()) {
+            Toast.makeText(this, "Please enter location details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         DatabaseReference newPostRef = databaseReference.push();
+        newPostRef.child("location").setValue(locationDetails);
         newPostRef.child("message").setValue(postMessage);
         newPostRef.child("userEmail").setValue("user@example.com");
         newPostRef.child("reportTitle").setValue(reportTitle);
@@ -156,6 +166,14 @@ public class NewReportForm extends Activity {
             case "doc":
             case "docx":
                 return "documents";
+            case "mp3": // Mpeg audio layer III
+            case "wav": // waveform audio file format
+            case "flac" : // Free lossless audio code
+            case "aac": // Advanced audio coding
+            case "alac": // Apple lossless audio codec
+            case "ogg": // ogg vorbis
+            case "aiff": // audio interchange file format
+                return "music";
             default:
                 return "others";
         }

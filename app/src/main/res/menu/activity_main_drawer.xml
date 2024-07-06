@@ -5,18 +5,20 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_threads"
+            android:title="@string/threads" />
+
+        <item
             android:id="@+id/nav_slideshow"
             android:title="@string/menu_home" />
+
         <item
             android:id="@+id/nav_gallery"
             android:title="@string/groups" />
+
         <item
             android:id="@+id/nav_home"
             android:title="@string/users" />
-
-        <item
-            android:id="@+id/nav_threads"
-            android:title="@string/threads" />
 
     </group>
 </menu>

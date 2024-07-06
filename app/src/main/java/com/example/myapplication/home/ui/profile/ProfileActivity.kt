@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.ui.AppBarConfiguration
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.myapplication.MainActivity
 import com.example.myapplication.R
-import com.example.myapplication.databinding.ActivityProfileBinding
 import com.example.myapplication.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,12 +22,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var database: FirebaseDatabase
     private lateinit var userReference: DatabaseReference
     private lateinit var userListener: ValueEventListener
-
-    private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var binding: ActivityProfileBinding
-
-    private lateinit var userEmailAddress: TextView
-    private lateinit var imageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
