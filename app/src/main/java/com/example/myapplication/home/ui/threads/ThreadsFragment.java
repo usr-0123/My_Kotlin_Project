@@ -1,4 +1,4 @@
-package com.example.myapplication.home.ui.threads.model;
+package com.example.myapplication.home.ui.threads;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.home.ui.threads.adapter.PostAdapter;
+import com.example.myapplication.home.ui.threads.model.Post;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

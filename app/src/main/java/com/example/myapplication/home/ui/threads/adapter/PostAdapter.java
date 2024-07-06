@@ -47,7 +47,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     class PostViewHolder extends RecyclerView.ViewHolder {
         TextView contentTextView;
         ImageView postImageView;
-        Button commentButton;
+        TextView commentButton;
 
         public PostViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,6 +63,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                 Glide.with(itemView.getContext()).load(post.imageUrl).into(postImageView);
             }
 
+            // On clicking the comments, display the comments for the selected post
             commentButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

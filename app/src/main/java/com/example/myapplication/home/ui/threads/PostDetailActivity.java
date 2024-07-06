@@ -1,10 +1,7 @@
 package com.example.myapplication.home.ui.threads;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.home.ui.threads.adapter.CommentAdapter;
 import com.example.myapplication.home.ui.threads.model.Comment;
 import com.example.myapplication.home.ui.threads.model.Post;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +35,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private TextView timestampTextView;
     private RecyclerView commentsRecyclerView;
     private EditText commentEditText;
-    private Button addCommentButton;
+    private TextView addCommentButton;
 
     private CommentAdapter commentAdapter;
     private List<Comment> commentList;

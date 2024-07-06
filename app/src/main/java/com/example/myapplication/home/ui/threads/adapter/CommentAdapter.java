@@ -1,4 +1,4 @@
-package com.example.myapplication.home.ui.threads;
+package com.example.myapplication.home.ui.threads.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
